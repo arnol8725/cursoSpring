@@ -1,12 +1,28 @@
 package com.bolsadeideas.springboot.app;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.bolsadeideas.springboot.app.models.service.IUploadFileService;
+
 @SpringBootApplication
-public class SpringBootDatasJpaApplication {
+public class SpringBootDatasJpaApplication implements CommandLineRunner {
+	
+	@Autowired
+	@Qualifier("uploadFileService")
+	private IUploadFileService uploadFileService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringBootDatasJpaApplication.class, args);
+	}
+
+	@Override
+	public void run(String... arg0) throws Exception {
+		uploadFileService.deleteAll();
+		uploadFileService.init();
+		
 	}
 }
