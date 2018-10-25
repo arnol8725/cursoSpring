@@ -1,14 +1,20 @@
 package com.bolsadeideas.springboot.app.models.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Generated;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -41,12 +47,13 @@ public class Cliente implements Serializable {
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date createAt;
+	@OneToMany(mappedBy="cliente", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	private List<Factura> facturas;
 	
 	
 	
 	public Cliente() {
-		super();
-		// TODO Auto-generated constructor stub
+		facturas = new ArrayList<Factura>();
 	}
 	public Cliente(Long id, String nombre, String apellido, String email, Date createAt) {
 		super();
@@ -102,6 +109,20 @@ public class Cliente implements Serializable {
 		this.foto = foto;
 	}
 	
+	
+	
+	
+	
+	public List<Factura> getFacturas() {
+		return facturas;
+	}
+	public void setFacturas(List<Factura> facturas) {
+		this.facturas = facturas;
+	}
+	
+	public void addFactura(Factura factura) {
+		this.facturas.add(factura);
+	}
 	
 	@Override
 	public String toString() {
