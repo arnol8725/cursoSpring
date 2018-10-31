@@ -9,13 +9,23 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bolsadeideas.springboot.app.models.dao.IClienteDao;
+import com.bolsadeideas.springboot.app.models.dao.IFacturaDAO;
+import com.bolsadeideas.springboot.app.models.dao.IProductoDao;
 import com.bolsadeideas.springboot.app.models.entity.Cliente;
+import com.bolsadeideas.springboot.app.models.entity.Factura;
+import com.bolsadeideas.springboot.app.models.entity.Producto;
 
 @Service("ClienteService")
 public class ClienteServiceImpl implements IClienteService {
 	
 	@Autowired
 	private IClienteDao clienteDao;
+	
+	@Autowired
+	private IProductoDao productoDao;
+	
+	@Autowired
+	private IFacturaDAO facturaDao;
 
 	@Override
 	@Transactional(readOnly= true)
@@ -37,6 +47,13 @@ public class ClienteServiceImpl implements IClienteService {
 		// TODO Auto-generated method stub
 		return clienteDao.findOne(id);
 	}
+	
+	@Override
+	@Transactional(readOnly=true)
+	public Cliente fetchByIdWithFacturas(Long id) {
+		// TODO Auto-generated method stub
+		return clienteDao.fetchByIdWithFacturas(id);
+	}
 
 	@Override
 	@Transactional()
@@ -50,5 +67,46 @@ public class ClienteServiceImpl implements IClienteService {
 		// TODO Auto-generated method stub
 		return clienteDao.findAll(pageable);
 	}
+
+	@Override
+	public List<Producto> findByNombre(String term) {
+		// TODO Auto-generated method stub
+		//return productoDao.findByNombre(term);
+		return productoDao.findByNombreLikeIgnoreCase("%"+term+"%");
+	}
+
+	@Override
+	@Transactional()
+	public void saveFactura(Factura factura) {
+
+		facturaDao.save(factura);
+		
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public Producto findProductoById(Long id) {
+		return productoDao.findOne(id);
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public Factura findFacturaById(Long id) {
+		return facturaDao.findOne(id);
+	}
+
+	@Override
+	@Transactional
+	public void deleteFactura(Long id) {
+		facturaDao.delete(id); // facturaDao.deleteById(id);
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public Factura fetchFacturaByIdWithClienteWhithItemFacturaWithProducto(Long id) {
+		return facturaDao.fetchByIdWithClienteWhithItemFacturaWithProducto(id);
+	}
+
+	
 	
 }

@@ -78,7 +78,7 @@ public class ClienteController {
 
 		if (id > 0) {
 			// cliente = clienteService.findOne(id);
-			cliente = clienteServices.findOne(id);
+			cliente = clienteServices.fetchByIdWithFacturas(id);
 			LOG.info("El valor del cliente editar id " + cliente.getId());
 			if (cliente == null) {
 				flash.addFlashAttribute("error", "El cliente no existe en la base de datos");

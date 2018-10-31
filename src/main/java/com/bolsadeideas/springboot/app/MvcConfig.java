@@ -2,6 +2,9 @@ package com.bolsadeideas.springboot.app;
 
 import java.nio.file.Paths;
 
+
+
+
 import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.web.HttpMessageConverters;
@@ -12,6 +15,10 @@ import org.springframework.boot.autoconfigure.web.WebMvcProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+
+
+
+//public class MvcConfig implements WebMvcConfigurer{
 
 @Configuration
 public class MvcConfig extends WebMvcConfigurerAdapter {
