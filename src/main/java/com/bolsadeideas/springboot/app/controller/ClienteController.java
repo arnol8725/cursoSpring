@@ -95,7 +95,7 @@ public class ClienteController {
 		return "ver";
 	}
 
-	@RequestMapping(value = "/listar", method = RequestMethod.GET)
+	@RequestMapping(value = {"/listar","/"}, method = RequestMethod.GET)
 	public String listar(@RequestParam(name = "page", defaultValue = "0") int page, Model model) {
 		// Pageable pageRequest = new PageRequest.of(, size) esto para sprint boot 2
 		Pageable pageRequest = new PageRequest(page, 5);
