@@ -25,4 +25,7 @@ public class SpringBootDatasJpaApplication implements CommandLineRunner {
 		uploadFileService.init();
 		
 	}
+	
+	
+	
 }
