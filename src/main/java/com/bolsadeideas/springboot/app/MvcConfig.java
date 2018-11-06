@@ -6,7 +6,9 @@ import java.nio.file.Paths;
 
 
 import org.springframework.beans.factory.ListableBeanFactory;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 /*import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.web.HttpMessageConverters;
 import org.springframework.boot.autoconfigure.web.ResourceProperties;
@@ -18,6 +20,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 */
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 //public class MvcConfig implements WebMvcConfigurer{
@@ -25,6 +28,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class MvcConfig implements WebMvcConfigurer  {
 
+	
 	
 /*	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -35,5 +39,15 @@ public class MvcConfig implements WebMvcConfigurer  {
 		.addResourceLocations(resourcePath);
 		//.addResourceLocations("file:/C:/Temp/uploads/");
 	} */
+	
+	public void addViewControllers(ViewControllerRegistry registry) {
+		
+		registry.addViewController("/error_403").setViewName("error_403");
+	}
+	
+	@Bean
+	public BCryptPasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 
 }
