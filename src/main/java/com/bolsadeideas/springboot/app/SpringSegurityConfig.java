@@ -16,6 +16,9 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.bolsadeideas.springboot.app.auth.handler.LoginSeccessHandler;
+import com.bolsadeideas.springboot.app.models.service.JpaUserDetailServices;;
+
+
 
 
 
@@ -31,15 +34,20 @@ public class SpringSegurityConfig extends WebSecurityConfigurerAdapter  {
 	
 	@Autowired 
 	private BCryptPasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private JpaUserDetailServices userDetailsServices;
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception{
 		
-		auth.jdbcAuthentication()
+		/*auth.jdbcAuthentication()
 		.dataSource(dataSourse)
 		.passwordEncoder(passwordEncoder)
 		.usersByUsernameQuery("select username,password, enabled  from users where username=?")
-		.authoritiesByUsernameQuery("select u.username,a.authority from authorites a inner join users u on (a.user_id=u.id) where  u.username=?");
+		.authoritiesByUsernameQuery("select u.username,a.authority from authorites a inner join users u on (a.user_id=u.id) where  u.username=?");*/
+		
+		auth.userDetailsService(userDetailsServices).passwordEncoder(passwordEncoder);
 	/*PasswordEncoder encoder=PasswordEncoderFactories.createDelegatingPasswordEncoder();
 	
 	UserBuilder users = User.builder().passwordEncoder(encoder::encode);

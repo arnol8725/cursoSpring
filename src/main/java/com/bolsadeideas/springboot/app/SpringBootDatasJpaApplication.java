@@ -18,6 +18,8 @@ public class SpringBootDatasJpaApplication implements CommandLineRunner {
 	
 	@Autowired
 	BCryptPasswordEncoder passwordEncoder;
+	
+	
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringBootDatasJpaApplication.class, args);
@@ -31,6 +33,8 @@ public class SpringBootDatasJpaApplication implements CommandLineRunner {
 				for(int i=0; i<2 ; i++) {
 					String bycrytPassword = passwordEncoder.encode(password);
 					System.out.println(bycrytPassword);
+				
+				
 				}
 			
 		

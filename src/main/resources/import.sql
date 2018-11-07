@@ -42,3 +42,13 @@ insert into facturas_items(cantidad,factura_id,producto_id) values (1,1,6);
 
 insert into facturas(descripcion,observacion,cliente_id,create_at) values('Factura Bicicleta','Alguna nota importante',1,NOW());
 insert into facturas_items(cantidad,factura_id,producto_id) values (3,2,6);
+
+
+
+insert into users(username,password,enabled) values('arnol','$2a$10$x2//KDXuLHofH3UjeGv2a.hn93ep63/32WT9X2pm6bJzArL7GuHG6',1);
+insert into users(username,password,enabled) values('admin','$2a$10$02BEO8yBrk6cf27zRCV9DOsyHPTlUi1UvE/77q9/o/eiBxZvuKQSe',1);
+
+
+insert into authorities (user_id,authority) values (1,'ROLE_USER');
+insert into authorities (user_id,authority) values (2,'ROLE_USER');
+insert into authorities (user_id,authority) values (2,'ROLE_ADMIN');
