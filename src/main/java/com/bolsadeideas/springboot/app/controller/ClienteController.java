@@ -3,6 +3,7 @@ package com.bolsadeideas.springboot.app.controller;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Collection;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -39,6 +40,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
@@ -48,6 +50,7 @@ import com.bolsadeideas.springboot.app.models.entity.Cliente;
 import com.bolsadeideas.springboot.app.models.service.IClienteService;
 import com.bolsadeideas.springboot.app.models.service.IUploadFileService;
 import com.bolsadeideas.springboot.app.util.paginator.PageRender;
+import com.bolsadeideas.springboot.app.view.xml.ClienteList;
 
 
 @Controller
@@ -111,6 +114,11 @@ public class ClienteController {
 		model.put("titulo", "Consultar Cliente");
 		return "ver";
 	}
+	
+	@GetMapping(value = "/listar-Rest" )
+	public @ResponseBody ClienteList listarRest() {
+		return 	new ClienteList(clienteServices.findAll());
+	}
 
 	@RequestMapping(value = { "/listar", "/" }, method = RequestMethod.GET)
 	public String listar(@RequestParam(name = "page", defaultValue = "0") int page, Model model, Authentication authentication,HttpServletRequest request,Locale locale) {
@@ -147,11 +155,13 @@ public class ClienteController {
 		// Pageable pageRequest = new PageRequest.of(, size) esto para sprint boot 2
 		Pageable pageRequest = new PageRequest(page, 5);
 		Page<Cliente> clientes = clienteServices.findAll(pageRequest);
+		List<Cliente> DetalleClientes = clienteServices.findAll();
 		PageRender<Cliente> pageRender = new PageRender("listar", clientes);
 
 		model.addAttribute("titulo", messageSource.getMessage("text.cliente.listar.titulo", null, locale));
 		// model.addAttribute("clientes",clienteServices.findAll());
 		model.addAttribute("clientes", clientes);
+		model.addAttribute("detalleClientes", DetalleClientes);
 		model.addAttribute("page", pageRender);
 		return "listar";
 	}

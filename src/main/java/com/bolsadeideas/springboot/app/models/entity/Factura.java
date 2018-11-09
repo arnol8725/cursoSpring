@@ -19,8 +19,11 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.hibernate.validator.constraints.NotEmpty;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name="facturas")
@@ -39,6 +42,7 @@ public class Factura implements Serializable {
 	@Column(name="create_at")
 	private Date createAt;
 	@ManyToOne(fetch=FetchType.LAZY)
+	@JsonBackReference
 	private Cliente cliente;
 	
 	@OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL,orphanRemoval = true)
@@ -80,6 +84,8 @@ public class Factura implements Serializable {
 	public void setCreateAt(Date createAt) {
 		this.createAt = createAt;
 	}
+	
+	@XmlTransient
 	public Cliente getCliente() {
 		return cliente;
 	}
