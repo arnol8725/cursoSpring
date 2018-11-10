@@ -26,3 +26,4 @@ public class ClienteListJsonView extends MappingJackson2JsonView{
 	}
 
 }
+                                                                                      

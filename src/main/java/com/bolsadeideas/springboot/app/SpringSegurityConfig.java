@@ -9,12 +9,14 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.User.UserBuilder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.bolsadeideas.springboot.app.auth.filter.JWTAuthenticateFilter;
 import com.bolsadeideas.springboot.app.auth.handler.LoginSeccessHandler;
 import com.bolsadeideas.springboot.app.models.service.JpaUserDetailServices;;
 
@@ -62,14 +64,14 @@ public class SpringSegurityConfig extends WebSecurityConfigurerAdapter  {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		// TODO Auto-generated method stub
-		http.authorizeRequests().antMatchers("/","/css/**","/images/**","/js/**","/listar**","/locale","/listar-Rest","/api/clientes/**").permitAll()
+		http.authorizeRequests().antMatchers("/","/css/**","/images/**","/js/**","/listar**","/locale","/listar-Rest").permitAll()
 		/*.antMatchers("/ver/**").hasAnyRole("USER")*/
 		/*.antMatchers("/uploads/**").hasAnyRole("USER")*/
 		/*.antMatchers("/form/**").hasAnyRole("ADMIN")*/
 		/*.antMatchers("/eliminar/**").hasAnyRole("ADMIN")*/
 		/*.antMatchers("/factura/**").hasAnyRole("ADMIN")	*/	
 		.anyRequest().authenticated()
-		.and()
+		/*.and()
 		.formLogin()
 			.loginPage("/login")
 			.successHandler(successHandler)
@@ -77,7 +79,11 @@ public class SpringSegurityConfig extends WebSecurityConfigurerAdapter  {
 		.and()
 		.logout().permitAll()
 		.and()
-		.exceptionHandling().accessDeniedPage("/error_403")
+		.exceptionHandling().accessDeniedPage("/error_403")*/
+		.and()
+		.addFilter(new JWTAuthenticateFilter(authenticationManager()))		
+		.csrf().disable()
+		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 		;
 		/*.and()
 		.formLogin().loginPage("/login").loginProcessingUrl("/logincheck")
